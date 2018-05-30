@@ -2,13 +2,19 @@ package foflelp.coderdojohelper; //Das Paket festlegen
 /*
 Alle benötigten Bibliotheken importieren
  */
-import android.graphics.*; //Alle Bibliotheken, die mit 'android.graphics.' beginnen, importieren
-import android.support.v7.app.AppCompatActivity; //'android.support.v7.app.AppCompatActivity' importieren
-import android.os.Bundle; //'android.os.bundle' importieren
-import android.view.View; //'android.view.View' importieren
-import android.widget.*; //Alle Bibliotheken, die mit 'android.widget.' beginnen, importieren
 
-public class        MainActivity extends AppCompatActivity {
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+
+public class MainActivity extends AppCompatActivity {
     /*
     Variablen definieren
     LastAnswer: Die verherige Antwort
@@ -21,15 +27,15 @@ public class        MainActivity extends AppCompatActivity {
     LastSwState: Der vorherige Zustand des Farbschalters
 
      */
-    String mLastAnswer; //Den String 'mLastAnswer' erstellen
-    String mLastTitle; //Den String 'mLastTitle' erstellen
-    int mActiveColor; //Den Integer 'mActiveColor' erstellen
-    int mAccentColor; //Den Integer 'mAccentColor' erstellen
-    int mLastActiveColor; //Den Integer 'mLastActiveColor' erstellen
-    int mLastAccentColor; //Den Integer 'mLastAccentColor' erstellen
-    int mPassNumber; //Den Integer 'mPassNumber' erstellen
-    boolean mLastSwState; //Den Boolean 'mLastSwState' erstellen
-    boolean mUpdateLast = false; //Den Boolean 'mUpdateLast' erstellen und auf Falsch setzen
+    private String mLastAnswer; //Den String 'mLastAnswer' erstellen
+    private String mLastTitle; //Den String 'mLastTitle' erstellen
+    private int mActiveColor; //Den Integer 'mActiveColor' erstellen
+    private int mAccentColor; //Den Integer 'mAccentColor' erstellen
+    private int mLastActiveColor; //Den Integer 'mLastActiveColor' erstellen
+    private int mLastAccentColor; //Den Integer 'mLastAccentColor' erstellen
+    private int mPassNumber; //Den Integer 'mPassNumber' erstellen
+    private boolean mLastSwState; //Den Boolean 'mLastSwState' erstellen
+    private boolean mUpdateLast = false; //Den Boolean 'mUpdateLast' erstellen und auf Falsch setzen
     /*
     Die anderen Klassen festlegen
     Answers: Gibt den Text für mAnswerTextView
@@ -40,7 +46,8 @@ public class        MainActivity extends AppCompatActivity {
     private Answers mAnswers = new Answers(); //Die Klasse 'Ansers' als 'mAnswers' definieren
     private Colors mColors = new Colors(); //Die Klasse 'Colors' als 'mColors' definieren
     private Titles mTitles = new Titles(); //Die Klasse 'Titles' als 'mTitles' definieren
-    private BlockedAnswers mBlockedAnswers = new BlockedAnswers();
+    //Wollte ich machen, habe ich aber nicht.
+    //private BlockedAnswers mBlockedAnswers = new BlockedAnswers();
     /*
     Die Elemte aus activity_main.xml
     TitleTextView: Der Titel
@@ -59,7 +66,7 @@ public class        MainActivity extends AppCompatActivity {
     private ToggleButton mSwToggleButton; //Einen neuen ToggleButton 'mSwToggleButton' erstellen
     private RelativeLayout mRelativeLayout; //Ein neues RelativeLayout erstellen
 
-    public void reColor(){ //Funktion um allen Elementen eine neue Farbe zu geben
+    private void reColor() { //Funktion um allen Elementen eine neue Farbe zu geben
         /*
         Farben erstellen, es sollen nicht die gleichen Farben wie das letzte Mal,
         und bei der Akzentfarbe nicht die gleiche wie die Hauptfarbe sein.
@@ -92,7 +99,7 @@ public class        MainActivity extends AppCompatActivity {
         mSwToggleButton.setChecked(true); //'mSwToggleButton' auf AN setzen
     }
 
-    public void reColorSw(){ //Um alle Elemte Schwarz, bzw. Weiß sein zu lassen
+    private void reColorSw() { //Um alle Elemte Schwarz, bzw. Weiß sein zu lassen
         String tmpcblck = "black"; //Temporär, um "tmpc" zu parsen
         int tmpc = Color.parseColor(tmpcblck); //'black' sollte zu -16777216 werden
 
@@ -118,12 +125,12 @@ public class        MainActivity extends AppCompatActivity {
         mSwToggleButton.setChecked(false); //'mSwToggleButton auf AUS setzen
     }
 
-    public void reColorAccent(){ //Um nur allen Elementen, die die Akzentfarbe nutzen eine neue farbe zu geben
+    private void reColorAccent() { //Um nur allen Elementen, die die Akzentfarbe nutzen eine neue farbe zu geben
         /*
         Eine neue Akzentfarbe, die nicht den gleichen Wert wie die aktive Hauptfarbe oder die letzte Akzentfarbe hat, wird erstellt
          */
         mAccentColor = mColors.getColor(); // Eine Farbe setzen; das wird beim ersten Aufruf der Funktion benötigt
-        while (mAccentColor == mActiveColor|| mAccentColor == mLastAccentColor) { //Während die Akzentfarbe den gleichen Wert wie die jeztige Hauptfarbe oder die vorherige Akzentfarbe hat...
+        while (mAccentColor == mActiveColor || mAccentColor == mLastAccentColor) { //Während die Akzentfarbe den gleichen Wert wie die jeztige Hauptfarbe oder die vorherige Akzentfarbe hat...
             mAccentColor = mColors.getColor(); //wird von der Klasse Colors.java eine neue generiert
         }
         /*
@@ -137,6 +144,7 @@ public class        MainActivity extends AppCompatActivity {
         mBackButton.setTextColor(mAccentColor);
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,13 +152,13 @@ public class        MainActivity extends AppCompatActivity {
         /*
         Die oben definierten Elemte mit denen aus activity_main.xml verbinden
          */
-        mBackButton = (Button) findViewById(R.id.BackIconTextView);
-        mTitleTextView = (TextView) findViewById(R.id.titleTextView);
-        mAnswerTextView = (TextView) findViewById(R.id.answerTextView);
-        mQuestionButton = (Button) findViewById(R.id.questionButton);
-        mNewColorButton = (Button) findViewById(R.id.newcolorButton);
-        mSwToggleButton = (ToggleButton) findViewById(R.id.swToggleButton);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
+        mBackButton = findViewById(R.id.BackIconTextView);
+        mTitleTextView = findViewById(R.id.titleTextView);
+        mAnswerTextView = findViewById(R.id.answerTextView);
+        mQuestionButton = findViewById(R.id.questionButton);
+        mNewColorButton = findViewById(R.id.newcolorButton);
+        mSwToggleButton = findViewById(R.id.swToggleButton);
+        mRelativeLayout = findViewById(R.id.activity_main);
         /*
         Die Startfarben geben
          */
@@ -161,10 +169,9 @@ public class        MainActivity extends AppCompatActivity {
         /*
         FontAwesome als Schriftart setzen
          */
-        Typeface font = Typeface.createFromAsset( getAssets(), "fontawesome-webfont.ttf" ); //Die Variable 'font' erstellen und mit FontAwesome ('fontawesome-webfont.ttf') belegen
+        Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf"); //Die Variable 'font' erstellen und mit FontAwesome ('fontawesome-webfont.ttf') belegen
         mBackButton.setTypeface(font); //'mBackButton' mit der Schriftart FontAwesome versehen, damit das Icon korrekt dargestellt wird
 
-        //mBlockedAnswers.blockAnswer("Ich bin doof");
 
         View.OnClickListener listener = new View.OnClickListener() { //Einen neuen onClickListener erstellen
             /*
@@ -195,7 +202,7 @@ public class        MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (mUpdateLast == true) { //Falls 'mBackButton' sichtbar ist...
+                if (mUpdateLast) { //Falls 'mBackButton' sichtbar ist... (Wahr == (Wahr == Wahr))
                     mLastTitle = mTitleTextView.getText().toString(); //wird 'mLastTitle' auf den aktuellen Text von 'mTitleTextView',
                     mLastAnswer = mAnswerTextView.getText().toString(); //'mLastAnswer' auf den aktuellen Text von 'mAnswerTextView',
                     mLastActiveColor = mActiveColor; //'mLastActiveColor' auf die aktive Hauptfarbe ('mActiveColor'),
@@ -211,12 +218,12 @@ public class        MainActivity extends AppCompatActivity {
                 mPassNumber++;
 
                 String mNewAnswer = mAnswers.getAnswer();
-                while (mNewAnswer == mLastAnswer) {
+                while (mNewAnswer.equals(mLastAnswer)) { //.equals vergleicht den Inhalt des Strings, == die Herkunft
                     mNewAnswer = mAnswers.getAnswer();
                 }
 
                 String mNewTitle = mTitles.getTitle();
-                while (mNewTitle == mLastTitle) {
+                while (mNewTitle.equals(mLastTitle)) {
                     mNewTitle = mTitles.getTitle();
                 }
 
@@ -225,11 +232,8 @@ public class        MainActivity extends AppCompatActivity {
 
                 if (mSwToggleButton.isChecked()) {
                     reColor();
-                } else {
-                    if (mAccentColor == -16777216) {
-                    } else {
-                        reColorAccent();
-                    }
+                } else if (mAccentColor != -16777216) {
+                    reColorAccent();
                 }
             }
         };
@@ -239,7 +243,7 @@ public class        MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 reColorAccent();
-                    }
+            }
         };
         mNewColorButton.setOnClickListener(ncListener);
 
@@ -285,11 +289,12 @@ public class        MainActivity extends AppCompatActivity {
         mBackButton.setOnClickListener(backListener);
 
         View.OnLongClickListener longListener = new View.OnLongClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public boolean onLongClick(View v) { //Dies ist ein Easteregg. Wenn man gedrückt hält...
                 mTitleTextView.setText("Osterei!"); // Wird der Text von 'mTitleTextView' auf "Osterei!",
                 mAnswerTextView.setText(""); //und der von 'mAnswerTextView' auf "" gesetzt (Also praktisch geleert)
-                return(true); //Wenn man den Button loslässt, bleibt das ganze trotzdem in diesem Zusatnd
+                return (true); //Wenn man den Button loslässt, bleibt das ganze trotzdem in diesem Zusatnd
             }
         };
         mQuestionButton.setOnLongClickListener(longListener); // 'longListener' wird 'mQuestionButton' zugeordnet

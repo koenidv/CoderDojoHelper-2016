@@ -4,9 +4,10 @@ import java.util.Random;
 
 /**
  * Created by koeni on 04.02.2017.
+ *
  */
 
-public class Answers {
+class Answers {
     private String[] mAnswers = {
             "Mainkraft spielen (Nicht Minecraft!)",
             "In Java programmieren",
@@ -52,7 +53,7 @@ public class Answers {
             "In FreeCAD puzzeln"
     };
 
-    public String getAnswer() {
+    String getAnswer() {
         Random randomizer = new Random();
         int r = randomizer.nextInt(mAnswers.length);
         return mAnswers[r];

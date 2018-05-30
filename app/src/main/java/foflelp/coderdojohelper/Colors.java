@@ -6,6 +6,7 @@ import java.util.Random;
 
 /**
  * Created by koeni on 04.02.2017.
+ *
  */
 
 public class Colors {
@@ -21,6 +22,7 @@ public class Colors {
     public int getColor() {
         Random randomizer = new Random();
         int r = randomizer.nextInt(mColors.length);
+        //noinspection UnnecessaryLocalVariable
         int colorAsInt = Color.parseColor(mColors[r]);
         return colorAsInt;
     }
